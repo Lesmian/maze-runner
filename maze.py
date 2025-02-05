@@ -65,9 +65,9 @@ class Maze:
         cell.visited = True
         while True:
             to_visit = []
-            if i - 1 > 0 and not self._cells[i - 1][j].visited:
+            if i - 1 >= 0 and not self._cells[i - 1][j].visited:
                 to_visit.append((i - 1, j))
-            if j - 1 > 0 and not self._cells[i][j - 1].visited:
+            if j - 1 >= 0 and not self._cells[i][j - 1].visited:
                 to_visit.append((i, j - 1))
             if i + 1 < self.num_cols and not self._cells[i + 1][j].visited:
                 to_visit.append((i + 1, j))
@@ -101,6 +101,40 @@ class Maze:
             for j in range(self.num_rows):
                 self._cells[i][j].visited = False
 
+
+    def solve(self):
+        return self._solve_r(0, 0)
+    
+    def _solve_r(self, i, j):
+        self._animate()
+        cell = self._cells[i][j]
+        cell.visited = True
+        if i == self.num_cols - 1 and j == self.num_rows - 1:
+            return True
+        
+        directions = [(i + 1, j), (i, j + 1), (i - 1, j), (i, j - 1)]
+        for direction in directions:
+             new_i, new_j = direction
+             cell_exists = new_i >= 0 and new_i < self.num_cols and new_j >= 0 and new_j < self.num_rows
+             has_wall = False
+             if new_i > i and cell.has_right_wall:
+                has_wall = True
+             elif new_i < i and cell.has_left_wall:
+                has_wall = True
+             elif new_j > j and cell.has_bottom_wall:
+                has_wall = True
+             elif new_j < j and cell.has_top_wall:
+                has_wall = True
+
+             if cell_exists and not self._cells[new_i][new_j].visited and not has_wall:
+                new_cell = self._cells[new_i][new_j]
+                cell.draw_move(new_cell)
+                result = self._solve_r(new_i, new_j)
+                if result:
+                    return result
+                cell.draw_move(new_cell, True)
+
+        return False
 
     def _animate(self):
         if self._win == None:

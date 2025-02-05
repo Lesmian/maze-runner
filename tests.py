@@ -60,7 +60,7 @@ class Tests(unittest.TestCase):
         )
         self.assertEqual(
             m1._cells[0][0].has_right_wall,
-            False,
+            True,
         )
         self.assertEqual(
             m1._cells[1][0].has_top_wall,
@@ -68,11 +68,11 @@ class Tests(unittest.TestCase):
         )
         self.assertEqual(
             m1._cells[1][0].has_bottom_wall,
-            True,
+            False,
         )
         self.assertEqual(
             m1._cells[1][0].has_left_wall,
-            False,
+            True,
         )
         self.assertEqual(
             m1._cells[1][0].has_right_wall,
@@ -96,7 +96,7 @@ class Tests(unittest.TestCase):
         )
         self.assertEqual(
             m1._cells[1][1].has_top_wall,
-            True,
+            False,
         )
         self.assertEqual(
             m1._cells[1][1].has_bottom_wall,
