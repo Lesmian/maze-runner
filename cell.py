@@ -9,6 +9,7 @@ class Cell:
         self.has_top_wall = True
         self.has_bottom_wall = True
         self._win = window
+        self.visited = False
 
     def draw(self, point1, point2):
         self.point1 = point1
